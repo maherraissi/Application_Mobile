@@ -25,4 +25,5 @@
     <color name="yellow_900">#F57F17</color>
     <color name="orange_500">#FF9800</color>
     <color name="orange_700">#F57C00</color>
+    <color name="error">#ED6981</color>
 </resources>

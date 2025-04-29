@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">First</string>
+    <string name="home_activity_title">Accueil</string>
+    <string-array name="posts">
+        <item>Post 1</item>
+        <item>Post 2</item>
+        <item>Post 3</item>
+        <item>Post 4</item>
+        <item>Post 5</item>
+    </string-array>
 </resources>

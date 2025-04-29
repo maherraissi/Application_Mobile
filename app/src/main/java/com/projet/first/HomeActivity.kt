@@ -3,6 +3,10 @@ package com.projet.first
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +15,8 @@ import androidx.appcompat.widget.Toolbar
 class HomeActivity : AppCompatActivity() {
 
     @SuppressLint("MissingInflatedId")
+    lateinit var listPosts: ListView
+    var postsArray = arrayListOf<Post>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -18,14 +24,14 @@ class HomeActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         supportActionBar?.title = "Accueil"
 
 
         val email = intent.getStringExtra("email")
 
-        val listPosts = findViewById<ListView>(R.id.listPosts)
-        val postsArray = arrayListOf(
+        listPosts = findViewById<ListView>(R.id.listPosts)
+        postsArray = arrayListOf(
             Post(
                 "post1",
                 "une description du post 1 qui va être afficher ici au lieu de ce texte qui ne veut rien dire...",
@@ -92,6 +98,55 @@ class HomeActivity : AppCompatActivity() {
 
 
         }
+        registerForContextMenu(listPosts)
+    } // fin onCreate
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
+        when (item.itemId ) {
+            R.id.itemAdd -> {
+                Toast.makeText(this, "Ajouter un post", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemConfig -> {
+                Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemLogout -> {
+                finish()
+            }
+
+        }
+            return super.onOptionsItemSelected(item)
+        }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        menuInflater.inflate(R.menu.list_context_menu, menu)
+        super.onCreateContextMenu(menu, v, menuInfo)
+    }
+
+    override fun onContextItemSelected(item: android.view.MenuItem): Boolean {
+        val info: AdapterView.AdapterContextMenuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+        val position: Int = info.position
+        when (item.itemId) {
+            R.id.itemShow -> {
+                Intent(this, PostDetailsActivity::class.java).also {
+                    it.putExtra("titre", postsArray[position].titre)
+                    startActivity(it)
+                }
+            }
+            R.id.itemDelete -> {
+                postsArray.removeAt(position)
+            }
+        }
+        return super.onContextItemSelected(item)
+    }
+
 }
 

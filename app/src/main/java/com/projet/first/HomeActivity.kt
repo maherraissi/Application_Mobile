@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
@@ -17,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     lateinit var listPosts: ListView
     var postsArray = arrayListOf<Post>()
+    lateinit var adapter: PostsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -85,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
 
             )
 
-        val adapter = PostsAdapter(mContext = this, resource = R.layout.item_post, postsArray)
+        adapter = PostsAdapter(mContext = this, resource = R.layout.item_post, postsArray)
         listPosts.adapter = adapter
 
         listPosts.setOnItemClickListener { adapterView, view, position, id ->
@@ -115,38 +117,31 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show()
             }
             R.id.itemLogout -> {
-                finish()
+                // afficher un dialog pour confirmer la déconnexion
+                showLogoutConfirmationDialog()
+                //finish()
             }
 
         }
             return super.onOptionsItemSelected(item)
         }
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        menuInflater.inflate(R.menu.list_context_menu, menu)
-        super.onCreateContextMenu(menu, v, menuInfo)
-    }
-
-    override fun onContextItemSelected(item: android.view.MenuItem): Boolean {
-        val info: AdapterView.AdapterContextMenuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
-        val position: Int = info.position
-        when (item.itemId) {
-            R.id.itemShow -> {
-                Intent(this, PostDetailsActivity::class.java).also {
-                    it.putExtra("titre", postsArray[position].titre)
-                    startActivity(it)
-                }
-            }
-            R.id.itemDelete -> {
-                postsArray.removeAt(position)
-            }
+    fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Déconnexion")
+        builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter ?")
+        builder.setPositiveButton("Oui") { dialogInterface, id ->
+            finish()
         }
-        return super.onContextItemSelected(item)
-    }
+        builder.setNegativeButton("Non") { dialogInterface, id ->
+            dialogInterface.dismiss()
+        }
+        builder.setNeutralButton("Annuler") { dialogInterface, id ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+
+
 
 }
 

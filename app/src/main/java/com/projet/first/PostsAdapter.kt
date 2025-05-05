@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import com.projet.first.Data.Post
 
 class PostsAdapter(
     var mContext: Context,

@@ -1,4 +1,4 @@
-package com.projet.first
+package com.projet.first.Data
 
 data class Post(
     var titre: String,

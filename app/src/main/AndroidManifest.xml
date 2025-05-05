@@ -13,16 +13,17 @@
         android:theme="@style/Theme.First"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".PostDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".PostDetailsActivity"/>
-
+            android:parentActivityName=".PostDetailsActivity" />
         <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/home_activity_title"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">

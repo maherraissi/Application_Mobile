@@ -3,15 +3,13 @@ package com.projet.first
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.ContextMenu
 import android.view.Menu
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.projet.first.Data.Post
 
 class HomeActivity : AppCompatActivity() {
 
@@ -109,13 +107,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
-        when (item.itemId ) {
+        when (item.itemId) {
             R.id.itemAdd -> {
                 Toast.makeText(this, "Ajouter un post", Toast.LENGTH_SHORT).show()
             }
+
             R.id.itemConfig -> {
                 Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show()
             }
+
             R.id.itemLogout -> {
                 // afficher un dialog pour confirmer la déconnexion
                 showLogoutConfirmationDialog()
@@ -123,14 +123,16 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }
-            return super.onOptionsItemSelected(item)
-        }
+        return super.onOptionsItemSelected(item)
+    }
 
     fun showLogoutConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Déconnexion")
         builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter ?")
         builder.setPositiveButton("Oui") { dialogInterface, id ->
+            val editor = getSharedPreferences("authentification", MODE_PRIVATE).edit()
+            editor.remove("isAuthenticated")
             finish()
         }
         builder.setNegativeButton("Non") { dialogInterface, id ->
@@ -140,8 +142,7 @@ class HomeActivity : AppCompatActivity() {
             dialogInterface.dismiss()
         }
         val alertDialog: AlertDialog = builder.create()
-
-
-
+        alertDialog.show()
+    }
 }
 

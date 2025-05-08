@@ -10,9 +10,10 @@ import android.widget.EditText
 import android.widget.TextView
 import com.projet.first.DB.FirstUpDB
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
-    lateinit var db : FirstUpDB
+    lateinit var db: FirstUpDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = this.getSharedPreferences("authentification", MODE_PRIVATE)
         val isAuthenticated = sharedPreferences.getBoolean("isAuthenticated", false)
         val emailSharedPreferences = sharedPreferences.getString("email", "")
-        if(isAuthenticated){
+        if (isAuthenticated) {
             Intent(this, HomeActivity::class.java).also {
                 it.putExtra("email", emailSharedPreferences)
                 startActivity(it)
@@ -33,50 +34,57 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-            val connect = findViewById<Button>(R.id.connect)
-            val email = findViewById<EditText>(R.id.email)
-            val password = findViewById<EditText>(R.id.password)
-            val error = findViewById<TextView>(R.id.error)
+        val connect = findViewById<Button>(R.id.connect)
+        val email = findViewById<EditText>(R.id.email)
+        val password = findViewById<EditText>(R.id.password)
+        val error = findViewById<TextView>(R.id.error)
+        val tvregister = findViewById<TextView>(R.id.tvregister)
 
 
 
-            connect.setOnClickListener {
-                error.visibility = TextView.INVISIBLE
-                val txtEmail = email.text.toString()
-                val txtPassword = password.text.toString()
-                if(txtEmail.trim().isEmpty() || txtPassword.trim().isEmpty()) {
 
-                    error.text = "Vous devez remplir tout les champs!"
+        connect.setOnClickListener {
+            error.visibility = TextView.INVISIBLE
+            val txtEmail = email.text.toString()
+            val txtPassword = password.text.toString()
+            if (txtEmail.trim().isEmpty() || txtPassword.trim().isEmpty()) {
+
+                error.text = "Vous devez remplir tout les champs!"
+                error.visibility = TextView.VISIBLE
+
+            } else {
+                val user = db.findUser(txtEmail, txtPassword)
+
+                if (user != null) {
+                    email.setText("")
+                    password.setText("")
+
+                    // enregistrer dans sharedPreferences les boolean isAuthenticated
+                    val editor = sharedPreferences.edit()
+                    editor.putBoolean("isAuthenticated", true)
+                    editor.putString("email", txtEmail)
+                    editor.apply()
+
+
+                    // Intent Explicite
+                    Intent(this, HomeActivity::class.java).also {
+                        it.putExtra("email", txtEmail)
+                        startActivity(it)
+                    }
+                } else {
+                    error.text = "Email ou mot de passe incorrect"
                     error.visibility = TextView.VISIBLE
 
                 }
-                else{
-                    val correctEmail = "maher@gmail.com"
-                    val correctPassword = "110322"
-                    if(correctEmail == txtEmail && correctPassword == txtPassword){
-                        email.setText("")
-                        password.setText("")
+            }
 
-                        // enregistrer dans sharedPreferences les boolean isAuthenticated
-                        val editor = sharedPreferences.edit()
-                        editor.putBoolean("isAuthenticated", true)
-                        editor.putString("email", txtEmail)
-                        editor.apply()
+        }
 
-
-                       // Intent Explicite
-                        Intent(this, HomeActivity::class.java).also {
-                            it.putExtra("email", txtEmail)
-                            startActivity(it)
-                        }
-                    }
-                    else{
-                        error.text = "Email ou mot de passe incorrect"
-                        error.visibility = TextView.VISIBLE
-
-                    }
-                    }
-
+        tvregister.setOnClickListener {
+            Intent(this, RegisterActivity::class.java).also {
+                startActivity(it)
             }
         }
     }
+
+}

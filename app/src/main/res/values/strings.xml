@@ -8,4 +8,8 @@
         <item>Post 4</item>
         <item>Post 5</item>
     </string-array>
+    <string name="register_activity_title">Créer un compte</string>
+    <string name="error_empty_fields">Tout les champs sont obligatoires</string>
+    <string name="password_different">Les mots de passe ne correspondent pas</string>
+    <string name="success_registration">Votre compte a été créé avec succès</string>
 </resources>

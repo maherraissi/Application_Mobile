@@ -9,10 +9,10 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/itemConfig"
-        android:iconTint="@color/white"
+        android:iconTint="@color/black"
         android:title="Configuration" />
     <item
         android:id="@+id/itemLogout"
-        android:iconTint="@color/white"
+        android:iconTint="@color/black"
         android:title="Se déconnecter" />
 </menu>

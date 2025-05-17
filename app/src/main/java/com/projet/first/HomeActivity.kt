@@ -70,6 +70,7 @@ class HomeActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.itemAdd -> {
+                Toast.makeText(this, "Bouton Ajouter cliqué", Toast.LENGTH_SHORT).show()
                 Intent(this, AddPostActivity::class.java).also {
                     startActivity(it)
                 }

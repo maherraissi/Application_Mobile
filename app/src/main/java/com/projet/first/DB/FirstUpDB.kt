@@ -145,6 +145,18 @@ class FirstUpDB(mContexte: Context) : SQLiteOpenHelper(
 
     }
 
+    fun updatePost(post: Post): Boolean {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(TITLE, post.titre)
+        values.put(DESCRIPTION, post.description)
+        values.put(IMAGE, post.image)
+        // On ne modifie pas le nombre de likes ici
+        val result = db.update(POSTS_TABLE_NAME, values, "$POST_ID=?", arrayOf(post.id.toString()))
+        db.close()
+        return result > 0
+    }
+
     companion object{
         private val DB_NAME = "FirstUpDB"
         private val DB_VERSION = 3

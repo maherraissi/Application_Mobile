@@ -66,7 +66,7 @@ class AddPostActivity : AppCompatActivity() {
             if (titre.isEmpty() || description.isEmpty() || bitmap == null) {
                 Toast.makeText(this, R.string.error_empty_fields, Toast.LENGTH_SHORT).show();
                 if (bitmap == null) {
-                    Toast.makeText(this, "Veuillez sélectionner une image", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Veuillez sélectionner une image svp !", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Log.d("DEBUG", "Avant getBytes")
@@ -91,23 +91,23 @@ class AddPostActivity : AppCompatActivity() {
 
 
 
-        }
     }
+}
 
-    // Fonction utilitaire pour redimensionner le bitmap
-    fun resizeBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
-        val width = bitmap.width
-        val height = bitmap.height
-        val bitmapRatio: Float = width.toFloat() / height.toFloat()
-        val newWidth: Int
-        val newHeight: Int
-        if (bitmapRatio > 1) {
-            newWidth = maxSize
-            newHeight = (maxSize / bitmapRatio).toInt()
-        } else {
-            newHeight = maxSize
-            newWidth = (maxSize * bitmapRatio).toInt()
-        }
-        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+// Fonction utilitaire pour redimensionner le bitmap
+fun resizeBitmap(bitmap: Bitmap, maxSize: Int): Bitmap {
+    val width = bitmap.width
+    val height = bitmap.height
+    val bitmapRatio: Float = width.toFloat() / height.toFloat()
+    val newWidth: Int
+    val newHeight: Int
+    if (bitmapRatio > 1) {
+        newWidth = maxSize
+        newHeight = (maxSize / bitmapRatio).toInt()
+    } else {
+        newHeight = maxSize
+        newWidth = (maxSize * bitmapRatio).toInt()
     }
+    return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+}
 

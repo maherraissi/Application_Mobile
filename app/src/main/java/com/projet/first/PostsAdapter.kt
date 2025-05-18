@@ -61,7 +61,7 @@ class PostsAdapter(
                             values.removeAt(position)
                             notifyDataSetChanged()
                         }else {
-                            Toast.makeText(mContext, "Erreur lors de la suppression", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, "Erreur lors de la suppression !", Toast.LENGTH_SHORT).show()
                         }
 
                     }

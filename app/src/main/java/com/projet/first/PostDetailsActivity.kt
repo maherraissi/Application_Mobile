@@ -13,7 +13,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
 import com.projet.first.DB.FirstUpDB
 
-class PostDetailsActivity : AppCompatActivity() {
+class
+PostDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_details)

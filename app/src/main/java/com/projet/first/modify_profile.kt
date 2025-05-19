@@ -29,7 +29,7 @@ class ModifyProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_modify_profile)
+        setContentView(R.layout.modify_profile)
 
         db = FirstUpDB(this)
 
@@ -37,7 +37,6 @@ class ModifyProfileActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnSave = findViewById(R.id.btnSave)
-        tvError = findViewById(R.id.tvError)
 
         tvError.visibility = View.INVISIBLE
 
